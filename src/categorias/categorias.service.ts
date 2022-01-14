@@ -10,10 +10,12 @@ export class CategoriasService {
     @InjectModel('Categoria') private readonly categoriaModel: Model<Categoria>,
   ) {}
 
-  async criarCategoria(criarCategoria: CriarCategoriaDto): Promise<Categoria> {
-    const { categoria } = criarCategoria;
+  async criarCategoria(
+    criarCategoriaDto: CriarCategoriaDto,
+  ): Promise<Categoria> {
+    const { categoria } = criarCategoriaDto;
 
-    const categoriaEncontrada = this.categoriaModel
+    const categoriaEncontrada = await this.categoriaModel
       .findOne({ categoria })
       .exec();
 
@@ -21,7 +23,7 @@ export class CategoriasService {
       throw new BadRequestException(`Categoria ${categoria} já cadastrada!`);
     }
 
-    const categoriaCriada = new this.categoriaModel(CriarCategoriaDto);
+    const categoriaCriada = new this.categoriaModel(criarCategoriaDto);
 
     return await categoriaCriada.save();
   }
