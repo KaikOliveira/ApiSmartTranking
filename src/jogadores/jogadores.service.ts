@@ -30,7 +30,7 @@ export class JogadoresService {
   }
 
   async deletarJogador(email: string): Promise<any> {
-    return await this.jogadorModel.remove({ email }).exec();
+    return await this.jogadorModel.deleteOne({ email }).exec();
   }
 
   async consultarJogadorPeloEmail(email: string): Promise<Jogador> {
